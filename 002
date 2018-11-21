@@ -1,0 +1,500 @@
+                pThis.type = A;
+                pNext = getNext(p, pos);
+            }
+            else{
+                if(pThis.type == S){
+                    if(s.substr(sPos, pThis.stre - pThis.strb) == p.substr(pPos, pThis.stre - pThis.strb)){
+                        sPos += pThis.stre - pThis.strb;
+                        pThis = pNext;
+                        pNext = getNext(p, pos);
+                    }
+                    else{
+                        return false;
+                    }
+                }
+                else if(pThis.type == C){
+                    sPos ++;
+                    pThis = pNext;
+                    pNext = getNext(p, pos);
+                }
+                else if(pThis.type == A && pNext.type == S){
+                    pNext = getNext(p, pos);
+                }
+                else if(pThis.type == R && pNext.type == S){
+                    sPos ++;
+                    pThis = pNext;
+                    pNext = getNext(p, pos);
+                }
+                else if(pThis.type == R && pNext.type == C){
+                    sPos ++;
+                    pThis = pNext;
+                    pNext = getNext(p, pos);
+                }
+            }
+        }
+        return sPos == (int)s.size();
+    }*/
+
+public:
+    bool isMatch(string s, string p) {
+        if (p.empty()) return s.empty();
+
+        bool first_match = (!s.empty() && (p[0] == s[0] || p[0] == '.'));
+
+        if(p.length() >= 2 && p[1] == '*'){
+            return (isMatch(s, p.substr(2)) || (first_match && isMatch(s.substr(1), p)));
+        }
+        else{
+            return first_match && isMatch(s.substr(1), p.substr(1));
+        }
+    }
+};
+
+string stringToString(string input) {
+    assert(input.length() >= 2);
+    string result;
+    for (int i = 1; i < input.length() -1; i++) {
+        char currentChar = input[i];
+        if (input[i] == '\\') {
+            char nextChar = input[i+1];
+            switch (nextChar) {
+                case '\"': result.push_back('\"'); break;
+                case '/' : result.push_back('/'); break;
+                case '\\': result.push_back('\\'); break;
+                case 'b' : result.push_back('\b'); break;
+                case 'f' : result.push_back('\f'); break;
+                case 'r' : result.push_back('\r'); break;
+                case 'n' : result.push_back('\n'); break;
+                case 't' : result.push_back('\t'); break;
+                default: break;
+            }
+            i++;
+        } else {
+          result.push_back(currentChar);
+        }
+    }
+    return result;
+}
+
+string boolToString(bool input) {
+    return input ? "True" : "False";
+}
+
+int main() {
+    string line;
+    while (getline(cin, line)) {
+        string s = stringToString(line);
+        getline(cin, line);
+        string p = stringToString(line);
+
+        bool ret = Solution().isMatch(s, p);
+
+        string out = boolToString(ret);
+        cout << out << endl;
+    }
+    return 0;
+}
+//真是个大傻逼，其实题目本身很简单，只是自己想复杂了。匹配万变不离其宗:单向顺序，不论是
+---------------------------------------------0010---------------------------------------------
++++++++++++++++++++++++++++++++++++++++++++++0011+++++++++++++++++++++++++++++++++++++++++++++
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <sstream>
+#include <assert.h>
+
+using namespace std;
+
+class Solution {
+public:
+    class tudian{
+    private:
+        int value,index;
+        bool lessthan(tudian &t){
+            return value < t.value;
+        }
+    public:
+        tudian(int value, int index):value(value),index(index){}
+        friend int getsize(tudian &a, tudian &b){
+            return min(a.value, b.value)*(b.index - a.index);
+        }
+        bool operator<(tudian &t){
+            return index < t.index;
+        }
+        friend void update(vector<tudian>::iterator &a, vector<tudian>::iterator &b){
+            if(a->lessthan(*b)){
+                a ++;
+            }else if(b->lessthan(*a)){
+                b ++;
+            }else{
+                a ++;
+                b ++;
+            }
+        }
+    };
+    int maxArea0(vector<int>& height) {
+        vector<tudian> hl,hr;
+
+        int i, maxt;
+        i = 1;
+        maxt = height[0];
+        for(hl.push_back(tudian(maxt,0)); i < height.size(); i ++){
+            if(height[i] > maxt){
+                maxt = height[i];
+                hl.push_back(tudian(maxt,i));
+            }
+        }
+
+        i = height.size() - 2;
+        maxt = height[height.size() - 1];
+        for(hr.push_back(tudian(maxt,i + 1)); i >= 0; i --){
+            if(height[i] > maxt){
+                maxt = height[i];
+                hr.push_back(tudian(maxt,i));
+            }
+        }
+
+        int maxsize = 0;
+        for(vector<tudian>::iterator l = hl.begin(), r = hr.begin();
+            l != hl.end() && r != hr.end() && l < r; update(l, r)){
+            if(getsize(*l, *r) > maxsize){
+                maxsize = getsize(*l, *r);
+            }
+        }
+        return maxsize;
+    }
+    int maxArea(vector<int>& height) {
+        auto getsize = [&height](int il, int ir) -> int{
+            return min(height[il], height[ir])*(ir - il);
+        };
+        auto updatel = [&height](int &l, int &r, int &lnow){
+            for(; l < r; l ++){
+                if(height[l] > lnow){
+                    lnow = height[l];
+                    break;
+                }
+            }
+        };
+        auto updater = [&height](int &l, int &r, int &rnow){
+            for(; l < r; r --){
+                if(height[r] > rnow){
+                    rnow = height[r];
+                    break;
+                }
+            }
+        };
+        auto update = [&height,&updatel,&updater](int &l, int &r, int &lnow, int &rnow){
+            if(lnow < rnow){
+                updatel(l, r, lnow);
+            }else if(lnow > rnow){
+                updater(l, r, rnow);
+            }else{
+                updatel(l, r, lnow);
+                updater(l, r, rnow);
+            }
+        };
+
+        int l = 0, r = height.size() - 1;
+        int maxsize = getsize(l, r);
+
+        for(int lnow = height[l], rnow = height[r]; l < r;update(l, r, lnow, rnow)){
+            maxsize = max(maxsize, getsize(l, r));
+        }
+        return maxsize;
+    }
+};
+
+void trimLeftTrailingSpaces(string &input) {
+    input.erase(input.begin(), find_if(input.begin(), input.end(), [](int ch) {
+        return !isspace(ch);
+    }));
+}
+
+void trimRightTrailingSpaces(string &input) {
+    input.erase(find_if(input.rbegin(), input.rend(), [](int ch) {
+        return !isspace(ch);
+    }).base(), input.end());
+}
+
+vector<int> stringToIntegerVector(string input) {
+    vector<int> output;
+    trimLeftTrailingSpaces(input);
+    trimRightTrailingSpaces(input);
+    input = input.substr(1, input.length() - 2);
+    stringstream ss;
+    ss.str(input);
+    string item;
+    char delim = ',';
+    while (getline(ss, item, delim)) {
+        output.push_back(stoi(item));
+    }
+    return output;
+}
+
+int main() {
+    string line;
+    while (getline(cin, line)) {
+        vector<int> height = stringToIntegerVector(line);
+
+        int ret = Solution().maxArea(height);
+
+        string out = to_string(ret);
+        cout << out << endl;
+    }
+    return 0;
+}
+---------------------------------------------0011---------------------------------------------
++++++++++++++++++++++++++++++++++++++++++++++0012+++++++++++++++++++++++++++++++++++++++++++++
+#include <iostream>
+#include <string>
+#include <math.h>
+
+using namespace std;
+
+class Solution {
+public:
+    string intToRoman(int num) {
+        char one[] = {'I', 'X', 'C', 'M'};
+        char five[] = {'V', 'L', 'D'};
+        string roman;
+
+        int index = floor(log10(num));
+        for(; index >= 0; index --){
+            int wei = pow(10.0f, index);
+            int thiswei = num / wei;
+            num %= wei;
+            if(thiswei < 4){
+                roman.append(thiswei, one[index]);
+            }else if(thiswei == 4){
+                roman.append(1, one[index]);
+                roman.append(1, five[index]);
+            }else if(thiswei < 9){
+                roman.append(1, five[index]);
+                roman.append(thiswei - 5, one[index]);
+            }else{
+                roman.append(10 - thiswei, one[index]);
+                roman.append(1, one[index + 1]);
+            }
+        }
+        return roman;
+    }
+};
+
+int stringToInteger(string input) {
+    return stoi(input);
+}
+
+int main() {
+    string line;
+    while (getline(cin, line)) {
+        int num = stringToInteger(line);
+
+        string ret = Solution().intToRoman(num);
+
+        string out = (ret);
+        cout << out << endl;
+    }
+    return 0;
+}
+---------------------------------------------0012---------------------------------------------
++++++++++++++++++++++++++++++++++++++++++++++0015+++++++++++++++++++++++++++++++++++++++++++++
+#include <iostream>
+#include <algorithm>
+#include <vector>
+#include <sstream>
+
+using namespace std;
+
+class Solution {
+public:
+    vector<vector<int>> threeSum(vector<int>& nums) {
+        vector<vector<int>> rlt;
+        if(nums.size() < 3){
+            return rlt;
+        }
+        sort(nums.begin(), nums.end());
+
+        for(vector<int>::iterator i = nums.begin(); i + 1 != nums.end() && *i <= 0;){
+            vector<int>::iterator j = i + 1, k = nums.end() - 1;
+            while(j != k){
+                if(*i + *j + *k < 0){
+                    while(j != k && *j == *(++j) ){}
+                }
+                else if(*i + *j + *k > 0){
+                    while(j != k && *k == *(--k) ){}
+                }
+                else{
+                    rlt.push_back(vector<int>({*i, *j, *k}));
+                    while(j != k && *j == *(++j) ){}
+                    while(j != k && *k == *(--k) ){}
+                }
+            }
+            while(i + 1 != nums.end() && *i == *(++i)){}
+        }
+        return rlt;
+    }
+};
+
+void trimLeftTrailingSpaces(string &input) {
+    input.erase(input.begin(), find_if(input.begin(), input.end(), [](int ch) {
+        return !isspace(ch);
+    }));
+}
+
+void trimRightTrailingSpaces(string &input) {
+    input.erase(find_if(input.rbegin(), input.rend(), [](int ch) {
+        return !isspace(ch);
+    }).base(), input.end());
+}
+
+vector<int> stringToIntegerVector(string input) {
+    vector<int> output;
+    trimLeftTrailingSpaces(input);
+    trimRightTrailingSpaces(input);
+    input = input.substr(1, input.length() - 2);
+    stringstream ss;
+    ss.str(input);
+    string item;
+    char delim = ',';
+    while (getline(ss, item, delim)) {
+        output.push_back(stoi(item));
+    }
+    return output;
+}
+
+void IntVector2DPrint(const vector<vector<int>> &vec)
+{
+    printf("[\n");
+    for (size_t i = 0; i < vec.size(); i++)
+    {
+        printf("[ ");
+        for (size_t j = 0; j < vec[i].size(); j++)
+            printf("%d, ", vec[i][j]);
+        printf(" ]\n");
+    }
+    printf("]\n");
+}
+
+int main() {
+    string line;
+    while (getline(cin, line)) {
+        vector<int> nums = stringToIntegerVector(line);
+
+        auto ret = Solution().threeSum(nums);
+
+        IntVector2DPrint(ret);
+    }
+    return 0;
+}
+---------------------------------------------0015---------------------------------------------
++++++++++++++++++++++++++++++++++++++++++++++0016+++++++++++++++++++++++++++++++++++++++++++++
+#include <iostream>
+#include <algorithm>
+#include <vector>
+#include <sstream>
+
+using namespace std;
+
+class Solution {
+public:
+    int threeSumClosest(vector<int>& nums, int target) {
+        sort(nums.begin(), nums.end());
+        int rlt = nums[0] + nums[1] + nums[2];
+
+        for(vector<int>::iterator i = nums.begin(); i + 2 != nums.end() && rlt != target;){
+            vector<int>::iterator j = i + 1, k = nums.end() - 1;
+            while(j != k){
+                if(*i + *j + *k < target){
+                    rlt = abs(*i + *j + *k - target) < abs(rlt - target) ? *i + *j + *k : rlt;
+                    while(j != k && *j == *(++j) ){}
+                }
+                else if(*i + *j + *k > target){
+                    rlt = abs(*i + *j + *k - target) < abs(rlt - target) ? *i + *j + *k : rlt;
+                    while(j != k && *k == *(--k) ){}
+                }
+                else{
+                    return target;
+                }
+            }
+            while(*i == *(++i) && i + 2 != nums.end()){}
+        }
+        return rlt;
+    }
+};
+
+void trimLeftTrailingSpaces(string &input) {
+    input.erase(input.begin(), find_if(input.begin(), input.end(), [](int ch) {
+        return !isspace(ch);
+    }));
+}
+
+void trimRightTrailingSpaces(string &input) {
+    input.erase(find_if(input.rbegin(), input.rend(), [](int ch) {
+        return !isspace(ch);
+    }).base(), input.end());
+}
+
+vector<int> stringToIntegerVector(string input) {
+    vector<int> output;
+    trimLeftTrailingSpaces(input);
+    trimRightTrailingSpaces(input);
+    input = input.substr(1, input.length() - 2);
+    stringstream ss;
+    ss.str(input);
+    string item;
+    char delim = ',';
+    while (getline(ss, item, delim)) {
+        output.push_back(stoi(item));
+    }
+    return output;
+}
+
+int stringToInteger(string input) {
+    return stoi(input);
+}
+
+int main() {
+    string line;
+    while (getline(cin, line)) {
+        vector<int> nums = stringToIntegerVector(line);
+        getline(cin, line);
+        int target = stringToInteger(line);
+
+        int ret = Solution().threeSumClosest(nums, target);
+
+        string out = to_string(ret);
+        cout << out << endl;
+    }
+    return 0;
+}
+---------------------------------------------0016---------------------------------------------
++++++++++++++++++++++++++++++++++++++++++++++0018+++++++++++++++++++++++++++++++++++++++++++++
+#include <iostream>
+#include <algorithm>
+#include <vector>
+#include <sstream>
+
+using namespace std;
+
+class Solution {
+public:
+    vector<vector<int>> fourSum(vector<int>& nums, int target) {
+        vector<vector<int>> rlt;
+        if(nums.size() < 4){
+            return rlt;
+        }
+        sort(nums.begin(), nums.end());
+
+        for(vector<int>::iterator i = nums.begin(); i + 3 != nums.end() && *i * 4 <= target;){
+            for(vector<int>::iterator j = i + 1; j + 2 != nums.end() && *j * 3 <= target - *i;){
+                vector<int>::iterator k = j + 1, l = nums.end() - 1;
+                while(k != l){
+                    if(*i + *j + *k + *l < target){
+                        while(k != l && *k == *(++k) ){}
+                    }
+                    else if(*i + *j + *k + *l > target){
+                        while(k != l && *l == *(--l) ){}
+                    }
+                    else{
+                        rlt.push_back(vector<int>({*i, *j, *k, *l}));
+                        while(k != l && *k == *(++k) ){}
