@@ -2,11 +2,14 @@
 #define LEETCODE_HPP
  
 #include <iostream>
-#include <string>
 #include <sstream>
+
+#include <algorithm>
 #include <memory>
+#include <functional>
 #include <optional>
 
+#include <string>
 #include <vector>
 
 using namespace std;
@@ -119,6 +122,7 @@ inline ostream& operator<<(ostream& ostr, shared_ptr<TreeNode>&& t) {
 }
 
 
+//输出数组内容，可输出多级嵌套的数组
 template<typename T>
 inline ostream& operator<<(ostream& ostr, vector<T>& v) {
     ostr << "{\n";

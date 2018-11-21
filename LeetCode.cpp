@@ -2,6 +2,17 @@
 
 int main()
 {
+    vector<string> vs{"a", "b"};
+    vector<vector<string>> vvs{{"1a", "1b"},{"2a", "2b"}};
+    vector<vector<vector<string>>> vvvs{{{"1a"}, {"1b"}},{{"2a"}, {"2b"}}};
+    cout << vs << endl << vvs << endl << vvvs << endl;
+
+    vector<int> vi{1, 2};
+    vector<vector<int>> vvi{{11, 12},{21, 22}};
+    vector<vector<vector<int>>> vvvi{{{11}, {12}},{{21}, {22}}};
+    cout << vi << endl << vvi << endl << vvvi << endl;
+	
+	
     shared_ptr<ListNode> l(ListNode::Create({1,2,3,4,5}));
     cout << l << endl;
 
