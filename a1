@@ -1,0 +1,500 @@
++++++++++++++++++++++++++++++++++++++++++++++Pat4003+++++++++++++++++++++++++++++++++++++++++++++
+#include <iostream>
+#include <iomanip>
+#include <list>
+
+using namespace std;
+
+int main()
+{
+    int a, b, sum;
+    cin >> a >> b;
+    sum = a + b;
+    list<int> sumLink;
+    for(; abs(sum) > 0; sum /= 1000){
+        sumLink.insert(sumLink.begin(), sum%1000);
+    }
+    bool ifFirst = true;
+    for(list<int>::iterator i = sumLink.begin(); i != sumLink.end(); i ++){
+        if(ifFirst){
+            ifFirst = false;
+            cout << *i;
+        }else{
+            cout << ',' << setfill('0') << setw(3) << abs(*i);
+        }
+    }
+    return 0;
+}
+---------------------------------------------Pat4003---------------------------------------------
++++++++++++++++++++++++++++++++++++++++++++++Pat4014+++++++++++++++++++++++++++++++++++++++++++++
+#include <iostream>
+#include <map>
+
+using namespace std;
+
+string to13th(int num)
+{
+    string numstr;
+    numstr += (char)((num/13)<=9?((num/13)+'0'):((num/13)+'A'-10));
+    numstr += (char)((num%13)<=9?((num%13)+'0'):((num%13)+'A'-10));
+    return numstr;
+}
+
+int main()
+{
+    int R, G, B;
+    cin >> R >> G >> B;
+    cout << '#' << to13th(R) << to13th(G) << to13th(B);
+    return 0;
+}
+---------------------------------------------Pat4014---------------------------------------------
++++++++++++++++++++++++++++++++++++++++++++++Pat4015+++++++++++++++++++++++++++++++++++++++++++++
+#include <iostream>
+#include <iomanip>
+#include <algorithm>
+
+using namespace std;
+
+class student{
+    int ID;
+    string name;
+    int grade;
+
+public:
+    static int C;
+
+public:
+    student()
+    {
+        cin >> ID >> name >> grade;
+    }
+    bool operator<(student& s)
+    {
+        switch(C){
+        case 1:{
+                return ID < s.ID;
+            }
+        case 2:{
+                if(name == s.name){
+                    return ID < s.ID;
+                }
+                return name < s.name;
+            }
+        case 3:{
+                if(grade == s.grade){
+                    return ID < s.ID;
+                }
+                return grade < s.grade;
+            }
+        default:{
+                return true;
+            }
+        }
+    }
+    friend ostream& operator<<(ostream& ostr, student& s)
+    {
+        return ostr  << right << setfill('0') << setw(6) << s.ID << ' ' << s.name << ' ' << s.grade << ' ' << endl;
+    }
+};
+int student::C;
+int main()
+{
+    int N = 0;
+    cin >> N >> student::C;
+    vector<student> input(N);
+
+    sort(input.begin(),input.end());
+
+    for(vector<student>::iterator i=input.begin();i!=input.end();i++){
+        cout << *i;
+    }
+    return 0;
+}
+
+---------------------------------------------Pat4015---------------------------------------------
++++++++++++++++++++++++++++++++++++++++++++++Pat4016+++++++++++++++++++++++++++++++++++++++++++++
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+int main()
+{
+    int N1, N2;
+    cin >> N1;
+    vector<long> S1(N1);
+    for(int i=0;i!=N1;i++){
+        cin >> S1[i];
+    }
+    cin >> N2;
+    vector<long> S2(N2);
+    for(int i=0;i!=N2;i++){
+        cin >> S2[i];
+    }
+
+    int i1=0, i2=0;
+    while(i1 + i2 < (N1 + N2 - 1) / 2 && i1 < N1 && i2 < N2){
+        if(S1[i1] < S2[i2]){
+            i1++;
+        }else{
+            i2++;
+        }
+    }
+    if(i1 == N1){
+        cout << S2[(N1 + N2) / 2 - i1];
+    }else if(i2 == N2){
+        cout << S1[(N1 + N2) / 2 - i2];
+    }else {
+        cout << min(S1[i1],S2[i2]);
+    }
+
+    return 0;
+}
+
+//本题问题：注意奇偶数
+---------------------------------------------Pat4016---------------------------------------------
++++++++++++++++++++++++++++++++++++++++++++++Pat4017+++++++++++++++++++++++++++++++++++++++++++++
+#include <iostream>
+#include <map>
+#include <set>
+#include <vector>
+#include <list>
+
+using namespace std;
+
+#if 0
+class Key{
+public:
+    int Distance;
+    int Cost;
+public:
+    Key():Distance(0), Cost(0){}
+
+    Key(int Distance, int Cost):Distance(Distance), Cost(Cost){}
+
+    Key(Key& a,Key& b):Distance(a.Distance + b.Distance), Cost(a.Cost + b.Cost){}
+
+    template <typename T>
+    bool operator<(T&& k)
+    {
+        return (Distance < k.Distance) || (Distance == k.Distance && Cost < k.Cost);
+    }
+
+    template <typename T>
+    bool operator<(const T&& k)
+    {
+        return (Distance < k.Distance) || (Distance == k.Distance && Cost < k.Cost);
+    }
+
+    bool operator<(const Key k)
+    {
+        return (Distance < k.Distance) || (Distance == k.Distance && Cost < k.Cost);
+    }
+};
+
+bool operator<(const Key a, const Key b)
+{
+    return (a.Distance < b.Distance) || (a.Distance == b.Distance && a.Cost < b.Cost);
+}
+
+class CityNode:public Key{
+public:
+    int City;
+    int nextCity;
+
+public:
+    CityNode():City(0), nextCity(0){}
+
+    template <typename T>
+    CityNode(int City, int nextCity, T&& key):City(City), nextCity(nextCity), Key(key){}
+
+    CityNode(int City, int nextCity, Key& a, Key& b):City(City), nextCity(nextCity), Key(a, b){}
+
+    CityNode(int City, int nextCity, CityNode& a, CityNode& b):City(City), nextCity(nextCity), Key(a, b){}
+
+    bool operator<(CityNode& c)
+    {
+        return City == -1 || nextCity == -1 || Key::operator<(c);
+    }
+};
+
+class TravelMap{
+	vector<multimap<Key, int>> mapNodes;
+    map<int, CityNode> pathfrom;
+private:
+public:
+    TravelMap(int N, int M):mapNodes(N)
+    {
+        int City1, City2, Distance, Cost;
+        for(int i=0;i!=M;i++){
+            cin >> City1 >> City2 >> Distance >> Cost;
+            mapNodes[City1].insert(make_pair(Key(Distance, Cost), City2));
+            mapNodes[City2].insert(make_pair(Key(Distance, Cost), City1));
+        }
+    }
+    void FindPath(int S, int D)
+    {
+        pathfrom.insert(make_pair(S, CityNode(-2 , S, Key(0, 0))));
+        while(true){
+            CityNode themost(-2, -1, Key(0, 0));
+
+            for(map<int, CityNode>::iterator i = pathfrom.begin(); i != pathfrom.end(); i ++){
+                CityNode nearest = getNearstPathFromNode(i -> first);
+                if(nearest.nextCity != -1){
+                    if(themost.nextCity == -1 || CityNode(-2, -2, nearest, i -> second) < themost){
+                        themost = CityNode(i -> first, nearest.nextCity, nearest, i -> second);
+                    }
+                }
+            }
+            if(themost.nextCity == -1){
+                exit(-1);
+            }
+            pathfrom.insert(make_pair(themost.nextCity, themost));
+            if(themost.nextCity == D){
+                return;
+            }
+        }
+    }
+    void Print(int S, int D)
+    {
+        map<int, int> pathto;
+        for(map<int, CityNode>::iterator i = pathfrom.find(D); i != pathfrom.end(); i = pathfrom.find(i -> second.City)){
+            pathto.insert(make_pair(i -> second.City, i -> second.nextCity));
+        }
+        for(int i = S; i != D; i = pathto[i]){
+            cout << i << ' ';
+        }
+        cout << D << ' ' << pathfrom[D].Distance << ' ' << pathfrom[D].Cost;
+    }
+
+};
+
+int main()
+{
+    int N, M, S, D;
+    cin >> N >> M >> S >> D;
+    TravelMap amap(N, M);
+    amap.FindPath(S, D);
+    amap.Print(S, D);
+    return 0;
+}
+
+
+//本题:说实话为了面向对象而面向对象，浪费了许多时间，写得也非常的烂，实际上效果完全不如。其实是更怀疑自己的能力。反观许多Java的提交，代码简洁明了，速度也十分快。考虑重新写一遍。
+//学习调用父类成员，加深STL数据结构理解
+#else
+
+class Edge{
+    int dist;
+    int cost;
+public:
+    int nextCity;
+public:
+    Edge(int nextCity,int dist, int cost):dist(dist), cost(cost), nextCity(nextCity){}
+
+    template <typename T>
+    bool operator<(T& e)
+    {
+        return dist < e.dist || (!(e.dist < dist) && cost < e.cost);
+    }
+
+    template <typename T>
+    bool operator<(T&& e)
+    {
+        return dist < e.dist || (!(e.dist < dist) && cost < e.cost);
+    }
+
+    template <typename T>
+    bool operator<(T& e) const
+    {
+        return dist < e.dist || (!(e.dist < dist) && cost < e.cost);
+    }
+
+    template <typename T>
+    bool operator<(T&& e) const
+    {
+        return dist < e.dist || (!(e.dist < dist) && cost < e.cost);
+    }
+
+    Edge operator+(const Edge e)
+    {
+        return Edge(nextCity, dist + e.dist, cost + e.cost);
+    }
+};
+
+class Graph{
+    vector<set<Edge>> edgeBag;
+private:
+    set<Edge>::iterator GetSubLeast(int city)
+    {
+        return edgeBag[city].begin();
+    }
+    set<Edge>::iterator GetSubLeastNext(int city, set<Edge>::iterator i)
+    {
+        return edgeBag[city].erase(i);
+    }
+public:
+    Graph(int cityNum):edgeBag(cityNum){}
+
+    void AddEdge(int city1, int city2, int dist, int cost)
+    {
+        edgeBag[city1].insert(Edge(city2, dist, cost));
+    }
+
+    map<int, Edge> Dijkstra(int src, int des)
+    {
+        map<int, Edge> res;
+        res.insert(make_pair(src, Edge(-1, 0, 0)));
+
+        while(true){
+            int leastTo = -1;
+            Edge least(0, 0, 0);
+            for(map<int, Edge>::iterator i = res.begin(); i != res.end(); i ++){
+
+                set<Edge>::iterator subLeast = edgeBag[i -> first].begin();
+                for(; subLeast != edgeBag[i -> first].end() && res.find(subLeast -> nextCity) != res.end(); subLeast = edgeBag[i -> first].erase(subLeast)){}
+
+                if(subLeast != edgeBag[i -> first].end()){
+                    if(leastTo == -1 || i -> second + *subLeast < least){
+                        leastTo = subLeast -> nextCity;
+                        least = i -> second + *subLeast;
+                    }
+                }
+            }
+            res.insert(make_pair(leastTo, least));
+            if(leastTo == des){
+                return res;
+            }
+        }
+    }
+    void output(map<int, Edge> res, int src, int des)
+    {
+        list<Edge> path;
+        for(int i = des; i != src; i = res.find(i) -> second.nextCity){
+            path.insert(path.begin(), (*res.find(i)));
+        }
+        for(list<Edge>::iterator i = path.begin(); i == path.end(); i ++){
+            cout << i -> nextCity << ' ';
+        }
+    }
+};
+
+int main()
+{
+    int N, M, S, D;
+    cin >> N >> M >> S >> D;
+    Graph graph(N);
+    for(int i = 0; i < M; i ++){
+        int city1, city2, dist, cost;
+        cin >> city1 >> city2 >> dist >> cost;
+        graph.AddEdge(city1, city2, dist, cost);
+        graph.AddEdge(city2, city1, dist, cost);
+    }
+    graph.output(graph.Dijkstra(S, D), S, D);
+    return 0;
+}
+
+#endif
+//函数名() const;const用于修饰this指针
+---------------------------------------------Pat4017---------------------------------------------
++++++++++++++++++++++++++++++++++++++++++++++Pat4022+++++++++++++++++++++++++++++++++++++++++++++
+#include <iostream>
+#include <map>
+#include <set>
+#include <vector>
+#include <list>
+ 
+using namespace std;
+ 
+class PassWord{
+    string ID;
+    string PSW;
+public:
+    friend istream& operator>>(istream& istr, PassWord& p)
+    {
+        return istr >> p.ID >> p.PSW;
+    }
+ 
+    bool IfNeedTrans()
+    {
+        bool ifNeed = false;
+        for(int i = PSW.find('0'); i != -1; i = PSW.find('0', i)){
+            ifNeed = true;
+            PSW[i] = '%';
+        }
+        for(int i = PSW.find('O'); i != -1; i = PSW.find('O', i)){
+            ifNeed = true;
+            PSW[i] = 'o';
+        }
+        for(int i = PSW.find('1'); i != -1; i = PSW.find('1', i)){
+            ifNeed = true;
+            PSW[i] = '@';
+        }
+        for(int i = PSW.find('l'); i != -1; i = PSW.find('l', i)){
+            ifNeed = true;
+            PSW[i] = 'L';
+        }
+        return ifNeed;
+    }
+ 
+    friend ostream& operator<<(ostream& ostr, PassWord& p)
+    {
+        return ostr << p.ID << ' ' << p.PSW << endl;
+    }
+};
+ 
+int main()
+{
+    int M;
+    cin >> M;
+    vector<PassWord> psws;
+    for(int i = 0; i < M; i++){
+        PassWord psw;
+        cin >> psw;
+        if(psw.IfNeedTrans()){
+            psws.push_back(psw);
+        }
+    }
+    if(psws.empty()){
+        cout << "There ";
+        if(M == 1){
+            cout << "is 1 account";
+        }else{
+            cout << "are " << M << " accounts";
+        }
+        cout << " and no account is modified";
+    }
+    else{
+        cout << psws.size() << endl;
+        for(vector<PassWord>::iterator i = psws.begin(); i != psws.end(); i ++){
+            cout << *i;
+        }
+    }
+    return 0;
+}---------------------------------------------Pat4022---------------------------------------------
++++++++++++++++++++++++++++++++++++++++++++++pat4024+++++++++++++++++++++++++++++++++++++++++++++
+#include <iostream>
+#include <algorithm>
+#include <vector>
+
+using namespace std;
+
+#if 0
+int main()
+{
+    int NC, NP;
+    int *coupon, *bonus;
+    cin >> NC;
+    coupon = new int[NC];
+    for(int i = 0; i < NC; i ++){
+        cin >> coupon[i];
+    }
+    cin >> NP;
+    bonus = new int[NP];
+    for(int i = 0; i < NP; i ++){
+        cin >> bonus[i];
+    }
+    sort(coupon, coupon + NC);
+    sort(bonus, bonus + NP);
+
+    long long sum = 0;
