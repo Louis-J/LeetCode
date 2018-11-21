@@ -1,0 +1,500 @@
+                        while(k != l && *l == *(--l) ){}
+                    }
+                }
+                while(*j == *(++j) && j + 2 != nums.end()){}
+            }
+            while(*i == *(++i + 1) && i + 3 != nums.end()){}
+        }
+        return rlt;
+    }
+};
+
+void trimLeftTrailingSpaces(string &input) {
+    input.erase(input.begin(), find_if(input.begin(), input.end(), [](int ch) {
+        return !isspace(ch);
+    }));
+}
+
+void trimRightTrailingSpaces(string &input) {
+    input.erase(find_if(input.rbegin(), input.rend(), [](int ch) {
+        return !isspace(ch);
+    }).base(), input.end());
+}
+
+vector<int> stringToIntegerVector(string input) {
+    vector<int> output;
+    trimLeftTrailingSpaces(input);
+    trimRightTrailingSpaces(input);
+    input = input.substr(1, input.length() - 2);
+    stringstream ss;
+    ss.str(input);
+    string item;
+    char delim = ',';
+    while (getline(ss, item, delim)) {
+        output.push_back(stoi(item));
+    }
+    return output;
+}
+
+void IntVector2DPrint(const vector<vector<int>> &vec)
+{
+    printf("[\n");
+    for (size_t i = 0; i < vec.size(); i++)
+    {
+        printf("[ ");
+        for (size_t j = 0; j < vec[i].size(); j++)
+            printf("%d, ", vec[i][j]);
+        printf(" ]\n");
+    }
+    printf("]\n");
+}
+
+int stringToInteger(string input) {
+    return stoi(input);
+}
+
+int main() {
+    string line;
+    while (getline(cin, line)) {
+        vector<int> nums = stringToIntegerVector(line);
+        getline(cin, line);
+        int target = stringToInteger(line);
+
+        auto ret = Solution().fourSum(nums, target);
+
+        IntVector2DPrint(ret);
+    }
+    return 0;
+}
+---------------------------------------------0018---------------------------------------------
++++++++++++++++++++++++++++++++++++++++++++++0019+++++++++++++++++++++++++++++++++++++++++++++
+#include <iostream>
+#include <algorithm>
+#include <vector>
+#include <sstream>
+
+using namespace std;
+
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+struct ListNode {
+    int val;
+    ListNode *next;
+    ListNode(int x) : val(x), next(NULL) {}
+};
+class Solution {
+public:
+    ListNode* removeNthFromEnd0(ListNode* head, int n) {
+        ListNode *revhead = NULL;
+        for(; head != NULL; ){
+            ListNode *temp = head;
+            head = head->next;
+            temp->next = revhead;
+            revhead = temp;
+        }
+        for(int i = 1; revhead != NULL; i++){
+            ListNode *temp = revhead;
+            revhead = revhead->next;
+            if(i == n){
+                delete temp;
+            }
+            else{
+                temp->next = head;
+                head = temp;
+            }
+        }
+        return head;
+    }
+    ListNode* removeNthFromEnd(ListNode* head, int n) {
+        int size = 0;
+        ListNode *h;
+        for(h = head; h != NULL; h = h->next){
+            size++;
+        }
+        if(size == n){
+            h = head->next;
+            delete head;
+            return h;
+        }
+        for(size -= n, h = head; size > 1; h = h->next){
+            size--;
+        }
+        ListNode *temp = h->next;
+        h->next = temp->next;
+        delete temp;
+        return head;
+    }
+};
+
+void trimLeftTrailingSpaces(string &input) {
+    input.erase(input.begin(), find_if(input.begin(), input.end(), [](int ch) {
+        return !isspace(ch);
+    }));
+}
+
+void trimRightTrailingSpaces(string &input) {
+    input.erase(find_if(input.rbegin(), input.rend(), [](int ch) {
+        return !isspace(ch);
+    }).base(), input.end());
+}
+
+vector<int> stringToIntegerVector(string input) {
+    vector<int> output;
+    trimLeftTrailingSpaces(input);
+    trimRightTrailingSpaces(input);
+    input = input.substr(1, input.length() - 2);
+    stringstream ss;
+    ss.str(input);
+    string item;
+    char delim = ',';
+    while (getline(ss, item, delim)) {
+        output.push_back(stoi(item));
+    }
+    return output;
+}
+
+ListNode* stringToListNode(string input) {
+    // Generate list from the input
+    vector<int> list = stringToIntegerVector(input);
+
+    // Now convert that list into linked list
+    ListNode* dummyRoot = new ListNode(0);
+    ListNode* ptr = dummyRoot;
+    for(int item : list) {
+        ptr->next = new ListNode(item);
+        ptr = ptr->next;
+    }
+    ptr = dummyRoot->next;
+    delete dummyRoot;
+    return ptr;
+}
+
+int stringToInteger(string input) {
+    return stoi(input);
+}
+
+string listNodeToString(ListNode* node) {
+    if (node == nullptr) {
+        return "[]";
+    }
+
+    string result;
+    while (node) {
+        result += to_string(node->val) + ", ";
+        node = node->next;
+    }
+    return "[" + result.substr(0, result.length() - 2) + "]";
+}
+
+int main() {
+    string line;
+    while (getline(cin, line)) {
+        ListNode* head = stringToListNode(line);
+        getline(cin, line);
+        int n = stringToInteger(line);
+
+        ListNode* ret = Solution().removeNthFromEnd(head, n);
+
+        string out = listNodeToString(ret);
+        cout << out << endl;
+    }
+    return 0;
+}
+---------------------------------------------0019---------------------------------------------
++++++++++++++++++++++++++++++++++++++++++++++0023+++++++++++++++++++++++++++++++++++++++++++++
+#include <iostream>
+
+using namespace std;
+
+int main()
+{
+    cout << "Hello world!" << endl;
+    return 0;
+}
+---------------------------------------------0023---------------------------------------------
++++++++++++++++++++++++++++++++++++++++++++++0025+++++++++++++++++++++++++++++++++++++++++++++
+#include <iostream>
+#include <algorithm>
+#include <vector>
+#include <sstream>
+
+using namespace std;
+
+struct ListNode {
+    int val;
+    ListNode *next;
+    ListNode(int x) : val(x), next(NULL) {}
+};
+class Solution {
+public:
+    ListNode* reverseKGroup(ListNode* head, int k) {
+        auto hasknode = [&k](ListNode* h)->bool{
+            for(int i = 0; i < k; i++){
+                h = h->next;
+                if(h == nullptr){
+                    return false;
+                }
+            }
+            return true;
+        };
+        auto revknode = [&hasknode, &k](ListNode* h)->ListNode*{
+            if(!hasknode(h))
+                return nullptr;
+            ListNode *realend = h->next;
+            ListNode *end = realend;
+            ListNode *endn = end->next;
+            ListNode *endnn = endn->next;
+            for(int i = 0; i < k; i++){
+                endn->next = end;
+                end = endn;
+                endn = endnn;
+                endnn = endnn->next;
+            }
+            h->next = endn;
+            realend->next = endnn;
+            return realend;
+        };
+        if(k <= 1){
+            return head;
+        }
+        ListNode newhead(0);
+        newhead.next = head;
+        for(ListNode *i = &newhead; i != nullptr; i = revknode(i)){}
+        return newhead.next;
+    }
+};
+
+void trimLeftTrailingSpaces(string &input) {
+    input.erase(input.begin(), find_if(input.begin(), input.end(), [](int ch) {
+        return !isspace(ch);
+    }));
+}
+
+void trimRightTrailingSpaces(string &input) {
+    input.erase(find_if(input.rbegin(), input.rend(), [](int ch) {
+        return !isspace(ch);
+    }).base(), input.end());
+}
+
+vector<int> stringToIntegerVector(string input) {
+    vector<int> output;
+    trimLeftTrailingSpaces(input);
+    trimRightTrailingSpaces(input);
+    input = input.substr(1, input.length() - 2);
+    stringstream ss;
+    ss.str(input);
+    string item;
+    char delim = ',';
+    while (getline(ss, item, delim)) {
+        output.push_back(stoi(item));
+    }
+    return output;
+}
+
+ListNode* stringToListNode(string input) {
+    // Generate list from the input
+    vector<int> list = stringToIntegerVector(input);
+
+    // Now convert that list into linked list
+    ListNode* dummyRoot = new ListNode(0);
+    ListNode* ptr = dummyRoot;
+    for(int item : list) {
+        ptr->next = new ListNode(item);
+        ptr = ptr->next;
+    }
+    ptr = dummyRoot->next;
+    delete dummyRoot;
+    return ptr;
+}
+
+int stringToInteger(string input) {
+    return stoi(input);
+}
+
+string listNodeToString(ListNode* node) {
+    if (node == nullptr) {
+        return "[]";
+    }
+
+    string result;
+    while (node) {
+        result += to_string(node->val) + ", ";
+        node = node->next;
+    }
+    return "[" + result.substr(0, result.length() - 2) + "]";
+}
+
+int main() {
+    string line;
+    while (getline(cin, line)) {
+        ListNode* head = stringToListNode(line);
+        getline(cin, line);
+        int k = stringToInteger(line);
+
+        ListNode* ret = Solution().reverseKGroup(head, k);
+
+        string out = listNodeToString(ret);
+        cout << out << endl;
+    }
+    return 0;
+}
+---------------------------------------------0025---------------------------------------------
++++++++++++++++++++++++++++++++++++++++++++++0029+++++++++++++++++++++++++++++++++++++++++++++
+#include <iostream>
+
+using namespace std;
+
+class Solution {
+public:
+    int divide(int dividend, int divisor) {
+        bool minus = (dividend < 0) ^ (divisor < 0);
+        unsigned udividend = abs(dividend);
+        unsigned udivisor = abs(divisor);
+        int rlt = 0;
+
+        unsigned i = 1;
+        for(; udivisor < udividend; i <<= 1){
+			//cout << udivisor << endl;
+            udivisor <<= 1;
+        }
+        for(; i >= 1; i >>= 1, udivisor >>= 1){
+            if(udividend >= udivisor){
+                udividend -= udivisor;
+                rlt += i;
+            }
+        }
+        return minus?-rlt:rlt;
+    }
+};
+
+int stringToInteger(string input) {
+    return stoi(input);
+}
+
+int main() {
+    string line;
+    while (getline(cin, line)) {
+        int dividend = stringToInteger(line);
+        getline(cin, line);
+        int divisor = stringToInteger(line);
+
+        int ret = Solution().divide(dividend, divisor);
+
+        string out = to_string(ret);
+        cout << out << endl;
+    }
+    return 0;
+}
+---------------------------------------------0029---------------------------------------------
++++++++++++++++++++++++++++++++++++++++++++++0039+++++++++++++++++++++++++++++++++++++++++++++
+#include <iostream>
+#include <algorithm>
+#include <vector>
+#include <sstream>
+#include <functional>
+
+using namespace std;
+
+class Solution {
+public:
+    vector<vector<int>> combinationSum(vector<int>& candidates, int target) {
+        sort(candidates.begin(), candidates.end());
+        vector<vector<int>> rlt;
+        function<void(vector<int>&& now, unsigned index, int leave)> recursion;
+        recursion = [&recursion, &rlt, &candidates](vector<int>&& now, unsigned index, int leave){
+            int nowsize = now.size();
+            now.push_back(0);
+            for(;index < candidates.size() && leave > candidates[index]; index++){
+                now[nowsize] = candidates[index];
+                recursion(move(now), index, leave - candidates[index]);
+            }
+            if(leave == candidates[index]){
+                now[nowsize] = leave;
+                rlt.push_back(now);
+            }
+            now.resize(nowsize);
+        };
+        recursion(vector<int>(), 0, target);
+        return rlt;
+    }
+};
+
+void trimLeftTrailingSpaces(string &input) {
+    input.erase(input.begin(), find_if(input.begin(), input.end(), [](int ch) {
+        return !isspace(ch);
+    }));
+}
+
+void trimRightTrailingSpaces(string &input) {
+    input.erase(find_if(input.rbegin(), input.rend(), [](int ch) {
+        return !isspace(ch);
+    }).base(), input.end());
+}
+
+vector<int> stringToIntegerVector(string input) {
+    vector<int> output;
+    trimLeftTrailingSpaces(input);
+    trimRightTrailingSpaces(input);
+    input = input.substr(1, input.length() - 2);
+    stringstream ss;
+    ss.str(input);
+    string item;
+    char delim = ',';
+    while (getline(ss, item, delim)) {
+        output.push_back(stoi(item));
+    }
+    return output;
+}
+
+void IntVector2DPrint(const vector<vector<int>> &vec)
+{
+    printf("[\n");
+    for (size_t i = 0; i < vec.size(); i++)
+    {
+        printf("[ ");
+        for (size_t j = 0; j < vec[i].size(); j++)
+            printf("%d, ", vec[i][j]);
+        printf(" ]\n");
+    }
+    printf("]\n");
+}
+
+int stringToInteger(string input) {
+    return stoi(input);
+}
+
+int main() {
+    string line;
+    while (getline(cin, line)) {
+        vector<int> nums = stringToIntegerVector(line);
+        getline(cin, line);
+        int target = stringToInteger(line);
+
+        auto ret = Solution().combinationSum(nums, target);
+
+        IntVector2DPrint(ret);
+    }
+    return 0;
+}
+---------------------------------------------0039---------------------------------------------
++++++++++++++++++++++++++++++++++++++++++++++0040+++++++++++++++++++++++++++++++++++++++++++++
+#include <iostream>
+#include <algorithm>
+#include <vector>
+#include <sstream>
+#include <functional>
+
+using namespace std;
+
+class Solution {
+public:
+    vector<vector<int>> combinationSum2(vector<int>& candidates, int target) {
+        sort(candidates.begin(), candidates.end());
+        vector<vector<int>> rlt;
+        function<void(vector<int>&& now, unsigned index, int leave)> recursion;
