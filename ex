@@ -396,6 +396,67 @@ const auto match6 = [](int n)
     return SwitchJ_Test(n);
 };
 
+const auto match7 = [](int n)
+{
+    which++;
+    return SwitchJ(n, CASES(
+        Case<int, int>{19, 10},
+        Case<int, int>{16, 11},
+        Case<int, int>{13, 12},
+        Case<int, int>{10, 13},
+        Case<int, int>{8 , 14},
+        Case<int, int>{6 , 15},
+        Case<int, int>{4 , 16},
+        Case<int, int>{3 , 17},
+        Case<int, int>{2 , 18},
+        Case<int, int>{1 , 19},
+
+        Case<int, int>{39, 20},
+        Case<int, int>{36, 21},
+        Case<int, int>{33, 22},
+        Case<int, int>{30, 23},
+        Case<int, int>{28, 24},
+        Case<int, int>{26, 25},
+        Case<int, int>{24, 26},
+        Case<int, int>{23, 27},
+        Case<int, int>{22, 28},
+        Case<int, int>{21, 29},
+
+        Case<int, int>{59, 30},
+        Case<int, int>{56, 31},
+        Case<int, int>{53, 32},
+        Case<int, int>{50, 33},
+        Case<int, int>{48, 34},
+        Case<int, int>{46, 35},
+        Case<int, int>{44, 36},
+        Case<int, int>{43, 37},
+        Case<int, int>{42, 38},
+        Case<int, int>{41, 39},
+
+        Case<int, int>{79, 40},
+        Case<int, int>{76, 41},
+        Case<int, int>{73, 42},
+        Case<int, int>{70, 43},
+        Case<int, int>{68, 44},
+        Case<int, int>{66, 45},
+        Case<int, int>{64, 46},
+        Case<int, int>{63, 47},
+        Case<int, int>{62, 48},
+        Case<int, int>{61, 49},
+
+        Case<int, int>{99, 50},
+        Case<int, int>{96, 51},
+        Case<int, int>{93, 52},
+        Case<int, int>{90, 53},
+        Case<int, int>{88, 54},
+        Case<int, int>{86, 55},
+        Case<int, int>{84, 56},
+        Case<int, int>{83, 57},
+        Case<int, int>{82, 58},
+        Case<int, int>{81, 59},
+    ));
+};
+
 const auto add0(const size_t circle, int n)
 {
     const auto timeBegin = boost::timer();
@@ -466,6 +527,17 @@ const auto add6(const size_t circle, int n)
     return tuple(ret, timeBy);
 }
 
+const auto add7(const size_t circle, int n)
+{
+    const auto timeBegin = boost::timer();
+    uint64_t ret = 0;
+    for (size_t i = 0; i < circle; ++i)
+        ret += match7(n);
+    const uint32_t timeBy = timeBegin.elapsed() * 1000;
+    return tuple(ret, timeBy);
+}
+
+
 int main(int argc,char* argv[])
 {
     size_t CIRCLE;
@@ -477,8 +549,8 @@ int main(int argc,char* argv[])
             cin.sync();
         }
     }
-
-    uint64_t times[7] = {0};
+    
+    uint64_t times[8] = {0};
     for (int i = 0; i < 100; i++) {
         cout << "输入:" << i << endl;
         const auto [ret0, time0] = add0(CIRCLE, i);
@@ -488,6 +560,7 @@ int main(int argc,char* argv[])
         const auto [ret4, time4] = add4(CIRCLE, i);
         const auto [ret5, time5] = add5(CIRCLE, i);
         const auto [ret6, time6] = add6(CIRCLE, i);
+        const auto [ret7, time7] = add7(CIRCLE, i);
         times[0] += time0;
         times[1] += time1;
         times[2] += time2;
@@ -495,6 +568,7 @@ int main(int argc,char* argv[])
         times[4] += time4;
         times[5] += time5;
         times[6] += time6;
+        times[7] += time7;
         cout << "    结果0:" << ret0 << "    耗时0:" << time0 << "ms" << endl;
         cout << "    结果1:" << ret1 << "    耗时1:" << time1 << "ms" << endl;
         cout << "    结果2:" << ret2 << "    耗时2:" << time2 << "ms" << endl;
@@ -502,6 +576,7 @@ int main(int argc,char* argv[])
         cout << "    结果4:" << ret4 << "    耗时4:" << time4 << "ms" << endl;
         cout << "    结果5:" << ret5 << "    耗时5:" << time5 << "ms" << endl;
         cout << "    结果6:" << ret6 << "    耗时6:" << time6 << "ms" << endl;
+        cout << "    结果7:" << ret7 << "    耗时7:" << time7 << "ms" << endl;
     }
     cout << "总耗时0:" << times[0] << "ms" << endl;
     cout << "总耗时1:" << times[1] << "ms" << endl;
@@ -510,6 +585,7 @@ int main(int argc,char* argv[])
     cout << "总耗时4:" << times[4] << "ms" << endl;
     cout << "总耗时5:" << times[5] << "ms" << endl;
     cout << "总耗时6:" << times[6] << "ms" << endl;
+    cout << "总耗时7:" << times[7] << "ms" << endl;
 
     return 0;
 }
