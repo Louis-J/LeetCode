@@ -1,0 +1,22 @@
+Language: Cpp
+
+BasedOnStyle: Google
+
+AccessModifierOffset: -4
+IndentWidth: 4
+TabWidth: 4
+SpacesInContainerLiterals: false
+ColumnLimit: 120
+AlignAfterOpenBracket: Align
+AlignConsecutiveAssignments: true
+
+AlignConsecutiveDeclarations: true
+AlignOperands: true
+AllowShortFunctionsOnASingleLine: true
+AlwaysBreakTemplateDeclarations: true
+BreakBeforeBraces: Attach
+Cpp11BracedListStyle: true
+SpaceAfterTemplateKeyword: true
+SpaceBeforeParens: Never
+DerivePointerAlignment: false
+PointerAlignment: Right

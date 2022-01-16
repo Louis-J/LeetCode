@@ -1,0 +1,423 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "buildcpp2a",
+            "command": "F:\\Program\\ProMaker\\CCPP\\Compiler\\GNU64\\bin\\g++.exe",
+            "args": [
+                "${file}",
+                "-D LEETCODE",
+                "-g3", "-O0",
+                "-std=c++2a",
+                // "-fsanitize=address",
+                // "-fno-omit-frame-pointer",
+                "-Wall",    // 开启额外警告
+                "-Wno-unused-variable",
+                "-Wno-sign-compare",
+                "-IF:\\Program\\ProMaker\\CCPP\\Compiler\\3rd\\include\\",
+                "-I${workspaceRoot}\\",
+                "-I${workspaceRoot}\\include\\",
+                "-L${workspaceRoot}\\lib\\",
+                "-static-libstdc++",
+                "-static-libgcc",
+
+                "-o${fileDirname}\\${fileBasenameNoExtension}.exe"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "new",
+                //"reveal": "silent"
+            },
+            "problemMatcher": {
+                "owner": "cpp",
+                "fileLocation": [
+                    "relative",
+                    "\\"
+                ],
+                "pattern": [
+                    {
+                        "regexp": "^(.*):(\\d+):(\\d+):\\s+(warning|error):\\s+(.*)$",
+                        "file": 1,
+                        "line": 2,
+                        "column": 3,
+                        "severity": 4,
+                        "message": 5
+                    }
+                ]
+            }
+        },
+        {
+            "label": "buildcpp",
+            "command": "F:\\Program\\ProMaker\\CCPP\\Compiler\\GNU64\\bin\\g++.exe",
+            "args": [
+                "${file}",
+                "-D LEETCODE",
+                "-g3", "-O0",
+                "-std=c++11",
+                // "-fsanitize=address",
+                // "-fno-omit-frame-pointer",
+                "-Wall",    // 开启额外警告
+                "-Wno-unused-variable",
+                "-Wno-sign-compare",
+                "-IF:\\Program\\ProMaker\\CCPP\\Compiler\\range\\",
+                "-IF:\\Program\\ProMaker\\CCPP\\Compiler\\3rd\\include\\",
+                "-I${workspaceRoot}\\",
+                "-I${workspaceRoot}\\include\\",
+                "-L${workspaceRoot}\\lib\\",
+                "-static-libstdc++",
+                "-static-libgcc",
+
+                "-o${fileDirname}\\${fileBasenameNoExtension}.exe"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "new",
+                //"reveal": "silent"
+            },
+            "problemMatcher": {
+                "owner": "cpp",
+                "fileLocation": [
+                    "relative",
+                    "\\"
+                ],
+                "pattern": [
+                    {
+                        "regexp": "^(.*):(\\d+):(\\d+):\\s+(warning|error):\\s+(.*)$",
+                        "file": 1,
+                        "line": 2,
+                        "column": 3,
+                        "severity": 4,
+                        "message": 5
+                    }
+                ]
+            }
+        },
+        {
+            "label": "buildcppw",
+            "command": "F:\\Program\\ProMaker\\CCPP\\Compiler\\GNU64\\bin\\g++.exe",
+            "args": [
+                "${file}",
+                "-mwindows",
+                "-D LEETCODE",
+                "-g3", "-O0",
+                "-std=c++11",
+                // "-fsanitize=address",
+                // "-fno-omit-frame-pointer",
+                "-Wall",    // 开启额外警告
+                "-Wno-unused-variable",
+                "-Wno-sign-compare",
+                "-IF:\\Program\\ProMaker\\CCPP\\Compiler\\range\\",
+                "-IF:\\Program\\ProMaker\\CCPP\\Compiler\\3rd\\include\\",
+                "-I${workspaceRoot}\\",
+                "-I${workspaceRoot}\\include\\",
+                "-L${workspaceRoot}\\lib\\",
+                "-static-libstdc++",
+                "-static-libgcc",
+
+                "-o${fileDirname}\\${fileBasenameNoExtension}.exe"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "new",
+                //"reveal": "silent"
+            },
+            "problemMatcher": {
+                "owner": "cpp",
+                "fileLocation": [
+                    "relative",
+                    "\\"
+                ],
+                "pattern": [
+                    {
+                        "regexp": "^(.*):(\\d+):(\\d+):\\s+(warning|error):\\s+(.*)$",
+                        "file": 1,
+                        "line": 2,
+                        "column": 3,
+                        "severity": 4,
+                        "message": 5
+                    }
+                ]
+            }
+        },
+        {
+            "label": "buildcppwRls",
+            "command": "F:\\Program\\ProMaker\\CCPP\\Compiler\\GNU64\\bin\\g++.exe",
+            "args": [
+                "${file}",
+                "-mwindows",
+                "-D LEETCODE",
+                "-O3",
+                "-std=c++11",
+                // "-fsanitize=address",
+                // "-fno-omit-frame-pointer",
+                "-Wall",    // 开启额外警告
+                "-Wno-unused-variable",
+                "-Wno-sign-compare",
+                "-IF:\\Program\\ProMaker\\CCPP\\Compiler\\range\\",
+                "-IF:\\Program\\ProMaker\\CCPP\\Compiler\\3rd\\include\\",
+                "-I${workspaceRoot}\\",
+                "-I${workspaceRoot}\\include\\",
+                "-L${workspaceRoot}\\lib\\",
+                "-static-libstdc++",
+                "-static-libgcc",
+
+                "-o${fileDirname}\\${fileBasenameNoExtension}.exe"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "new",
+                //"reveal": "silent"
+            },
+            "problemMatcher": {
+                "owner": "cpp",
+                "fileLocation": [
+                    "relative",
+                    "\\"
+                ],
+                "pattern": [
+                    {
+                        "regexp": "^(.*):(\\d+):(\\d+):\\s+(warning|error):\\s+(.*)$",
+                        "file": 1,
+                        "line": 2,
+                        "column": 3,
+                        "severity": 4,
+                        "message": 5
+                    }
+                ]
+            }
+        },
+        {
+            "label": "buildcppRls2a",
+            "command": "F:\\Program\\ProMaker\\CCPP\\Compiler\\GNU64\\bin\\g++.exe",
+            "args": [
+                "-D LEETCODE",
+                "-O3",
+                "${file}",
+                "-std=c++2a",
+                "-Wall",    // 开启额外警告
+                "-Wno-unused-variable",
+                "-IF:\\Program\\ProMaker\\CCPP\\Compiler\\range\\",
+                "-IF:\\Program\\ProMaker\\CCPP\\Compiler\\3rd\\include\\",
+                "-I${workspaceRoot}\\",
+                "-I${workspaceRoot}\\include\\",
+                "-L${workspaceRoot}\\lib\\",
+                "-static-libstdc++",
+                "-static-libgcc",
+
+                "-o${fileDirname}\\${fileBasenameNoExtension}.exe"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "new",
+                //"reveal": "silent"
+            },
+            "problemMatcher": {
+                "owner": "cpp",
+                "fileLocation": [
+                    "relative",
+                    "\\"
+                ],
+                "pattern": [
+                    {
+                        "regexp": "^(.*):(\\d+):(\\d+):\\s+(warning|error):\\s+(.*)$",
+                        "file": 1,
+                        "line": 2,
+                        "column": 3,
+                        "severity": 4,
+                        "message": 5
+                    }
+                ]
+            }
+        },
+        {
+            "label": "clang",
+            "command": "F:\\Program\\ProMaker\\CCPP\\Compiler\\Clang64\\bin\\clang++.exe",
+            "args": [
+                "--target=x86_64-w64-mingw32",
+                "-D LEETCODE",
+                "-g3", "-O0",
+                "${file}",
+                "-std=c++2a",
+                // "-fsanitize=address",
+                // "-fno-omit-frame-pointer",
+                "-Wall",    // 开启额外警告
+                "-Wno-invalid-source-encoding",
+                "-Wno-unused-variable",
+                "-IF:\\Program\\ProMaker\\CCPP\\Compiler\\range\\",
+                "-IF:\\Program\\ProMaker\\CCPP\\Compiler\\3rd\\include\\",
+                "-I${workspaceRoot}\\",
+                "-I${workspaceRoot}\\include\\",
+                "-L${workspaceRoot}\\lib\\",
+                "-static-libstdc++",
+                "-pthread",
+
+                "-o${fileDirname}\\${fileBasenameNoExtension}.exe"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "new",
+                //"reveal": "silent"
+            },
+            "problemMatcher": {
+                "owner": "cpp",
+                "fileLocation": [
+                    "relative",
+                    "\\"
+                ],
+                "pattern": [
+                    {
+                        "regexp": "^(.*):(\\d+):(\\d+):\\s+(warning|error):\\s+(.*)$",
+                        "file": 1,
+                        "line": 2,
+                        "column": 3,
+                        "severity": 4,
+                        "message": 5
+                    }
+                ]
+            }
+        },
+        {
+            "label": "clangRls",
+            "command": "F:\\Program\\ProMaker\\CCPP\\Compiler\\Clang64\\bin\\clang++.exe",
+            "args": [
+                "--target=x86_64-w64-mingw32",
+                "-D LEETCODE",
+                "-O3",
+                "${file}",
+                "-std=c++2a",
+                // "-fsanitize=address",
+                // "-fno-omit-frame-pointer",
+                "-Wall",    // 开启额外警告
+                "-Wno-invalid-source-encoding",
+                "-Wno-unused-variable",
+                "-IF:\\Program\\ProMaker\\CCPP\\Compiler\\range\\",
+                "-IF:\\Program\\ProMaker\\CCPP\\Compiler\\3rd\\include\\",
+                "-I${workspaceRoot}\\",
+                "-I${workspaceRoot}\\include\\",
+                "-L${workspaceRoot}\\lib\\",
+                "-static-libstdc++",
+                "-pthread",
+
+                "-o${fileDirname}\\${fileBasenameNoExtension}.exe"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "new",
+                //"reveal": "silent"
+            },
+            "problemMatcher": {
+                "owner": "cpp",
+                "fileLocation": [
+                    "relative",
+                    "\\"
+                ],
+                "pattern": [
+                    {
+                        "regexp": "^(.*):(\\d+):(\\d+):\\s+(warning|error):\\s+(.*)$",
+                        "file": 1,
+                        "line": 2,
+                        "column": 3,
+                        "severity": 4,
+                        "message": 5
+                    }
+                ]
+            }
+        },
+        {
+            "label": "clangRlsIR",
+            "command": "F:\\Program\\ProMaker\\CCPP\\Compiler\\Clang64\\bin\\clang++.exe",
+            "args": [
+                "--target=x86_64-w64-mingw32",
+                "-D LEETCODE",
+                "-S", "-emit-llvm",
+                "-O3",
+                "${file}",
+                "-std=c++2a",
+                "-Wall",    // 开启额外警告
+                "-Wno-invalid-source-encoding",
+                "-Wno-unused-variable",
+                "-IF:\\Program\\ProMaker\\CCPP\\Compiler\\range\\",
+                "-IF:\\Program\\ProMaker\\CCPP\\Compiler\\3rd\\include\\",
+                "-I${workspaceRoot}\\",
+                "-I${workspaceRoot}\\include\\",
+                "-L${workspaceRoot}\\lib\\",
+                "-static-libstdc++",
+                "-pthread",
+
+                "-o${fileDirname}\\${fileBasenameNoExtension}.ll"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "new",
+                //"reveal": "silent"
+            },
+            "problemMatcher": {
+                "owner": "cpp",
+                "fileLocation": [
+                    "relative",
+                    "\\"
+                ],
+                "pattern": [
+                    {
+                        "regexp": "^(.*):(\\d+):(\\d+):\\s+(warning|error):\\s+(.*)$",
+                        "file": 1,
+                        "line": 2,
+                        "column": 3,
+                        "severity": 4,
+                        "message": 5
+                    }
+                ]
+            }
+        }
+    ]
+}

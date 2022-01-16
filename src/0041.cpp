@@ -1,5 +1,5 @@
 #ifdef LEETCODE
-#include <LeetCodeL.hpp>
+#include "LeetCodeL.hpp"
 #endif
 
 //好几天没想出来，看别人答案的

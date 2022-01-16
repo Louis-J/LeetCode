@@ -1,6 +1,6 @@
 //本题用于其他项目(用于测试智能指针)的测试用例，因此做了些修改
 #ifdef LEETCODE
-#include <LeetCodeL.hpp>
+#include "LeetCodeL.hpp"
 #endif
 
 class Solution {

@@ -1,27 +1,19 @@
 #ifdef LEETCODE
-#include <LeetCodeL.hpp>
+#include "LeetCodeL.hpp"
 #endif
 
 class Solution {
-    inline static size_t NextNum(size_t n) {
-        size_t digit;
-        if(n*10/10 != n)
-            digit = 1000000000000000000;
-        else {
-            digit = 1;
-            while(digit <= n)
-                digit *= 10;
-            digit /= 10;
+    inline static int NextNum(int n) {
+        int ret = 0;
+        while(n) {
+            char i = n%10;
+            n /= 10;
+            ret += i*i;
         }
-        size_t sum = 0;
-        for(;digit != 0; digit /= 10) {
-            sum += (n/digit) * (n/digit);
-            n %= digit;
-        }
-        return sum;
+        return ret;
     }
 public:
-    inline bool isHappy(size_t n) {
+    inline bool isHappy(int n) {
         while(n > 99)
             n = NextNum(n);
         switch(n) {
@@ -62,3 +54,24 @@ int main() {
     return 0;
 }
 #endif
+
+// def next(n):
+//     r = 0
+//     while n != 0:
+//         i = n%10
+//         n = int(n/10)
+//         r += i*i
+//     return r
+
+// for i in range(1, 1000):
+//     if next(i) > i:
+//         print(i)
+
+// for i in range(1, 99):
+//     j = next(i)
+//     k = next(j)
+//     while j != k:
+//         j = next(j)
+//         k = next(next(k)) 
+//     if j == 1:
+//         print(i)

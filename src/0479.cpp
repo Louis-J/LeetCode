@@ -1,5 +1,5 @@
 #ifdef LEETCODE
-#include <LeetCodeL.hpp>
+#include "LeetCodeL.hpp"
 #endif
 
 using u64 = unsigned long long;

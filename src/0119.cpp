@@ -17,7 +17,7 @@ public:
 
 #ifdef LEETCODE
 int main() {
-    zhediePV = true;
+    cout << LCPrinter(true);
     cout << " 1:" << endl;
     {
         cout << Solution().getRow(3) << endl;

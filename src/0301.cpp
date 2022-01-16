@@ -1,17 +1,15 @@
 #ifdef LEETCODE
-#include <LeetCodeL.hpp>
+#include "LeetCodeL.hpp"
 #endif
 
 class Solution0 {
     static inline void AddStrL(vector<string> &strs, string &s, size_t b, size_t e) {
         vector<string> slices;
         for(size_t i = b; i <= e; i++) {
-            if(s[i] == '(' && (i == s.size()-1 || s[i+1] != '(')) {
+            if(s[i] == '(' && (i == s.size() - 1 || s[i + 1] != '(')) {
                 string tmp;
-                for(size_t j = b; j < i; j++)
-                    tmp += s[j];
-                for(size_t j = i+1; j <= e; j++)
-                    tmp += s[j];
+                for(size_t j = b; j < i; j++) tmp += s[j];
+                for(size_t j = i + 1; j <= e; j++) tmp += s[j];
                 slices.emplace_back(tmp);
             }
         }
@@ -20,20 +18,17 @@ class Solution0 {
         } else {
             vector<string> newstrs;
             for(auto &i : strs)
-                for(auto &j : slices)
-                    newstrs.emplace_back(j+i);
+                for(auto &j : slices) newstrs.emplace_back(j + i);
             swap(newstrs, strs);
         }
     }
     static inline void AddStrR(vector<string> &strs, string &s, size_t b, size_t e) {
         vector<string> slices;
         for(size_t i = b; i <= e; i++) {
-            if(s[i] == ')' && (i == 0 || s[i-1] != ')')) {
+            if(s[i] == ')' && (i == 0 || s[i - 1] != ')')) {
                 string tmp;
-                for(size_t j = b; j < i; j++)
-                    tmp += s[j];
-                for(size_t j = i+1; j <= e; j++)
-                    tmp += s[j];
+                for(size_t j = b; j < i; j++) tmp += s[j];
+                for(size_t j = i + 1; j <= e; j++) tmp += s[j];
                 slices.emplace_back(tmp);
             }
         }
@@ -42,8 +37,7 @@ class Solution0 {
         } else {
             vector<string> newstrs;
             for(auto &i : strs)
-                for(auto &j : slices)
-                    newstrs.emplace_back(i+j);
+                for(auto &j : slices) newstrs.emplace_back(i + j);
             swap(newstrs, strs);
         }
     }
@@ -51,67 +45,60 @@ class Solution0 {
         size_t le = 0, sum = 0, lc = 0;
         for(size_t i = 0; i < s.size(); i++) {
             switch(s[i]) {
-            case '(':
-                sum++;
-                break;
-            case ')':
-                if(sum == 0) {
-                    if(le != i)
-                        AddStrR(retR, s, le, i);
-                    le = i+1;
-                } else
-                    sum--;
-                if(sum == 0)
-                    lc = i+1;
-                break;
-            default:
-                if(sum == 0)
-                    lc = i+1;
-                break;
+                case '(':
+                    sum++;
+                    break;
+                case ')':
+                    if(sum == 0) {
+                        if(le != i) AddStrR(retR, s, le, i);
+                        le = i + 1;
+                    } else
+                        sum--;
+                    if(sum == 0) lc = i + 1;
+                    break;
+                default:
+                    if(sum == 0) lc = i + 1;
+                    break;
             }
         }
-        if(retR.size() == 0)
-            retR.emplace_back();
+        if(retR.size() == 0) retR.emplace_back();
         if(lc > le) {
-            for(auto &i : retR)
-                i.append(&(s[le]), &(s[lc]));
+            for(auto &i : retR) i.append(&(s[le]), &(s[lc]));
         }
         last = max(lc, le);
     }
     static inline void RemoveL(string &s, vector<string> &retL, int &last) {
-        int le = s.size()-1, sum = 0, lc = le;
+        int le = s.size() - 1, sum = 0, lc = le;
         for(int i = le; i >= last; i--) {
             switch(s[i]) {
-            case ')':
-                sum++;
-                break;
-            case '(':
-                if(sum == 0) {
-                    if(le != i)
-                        AddStrL(retL, s, i, le);
-                    le = i-1;
-                } else
-                    sum--;
-                if(sum == 0)
-                    lc = i-1;
-                break;
-            default:
-                if(sum == 0)
-                    lc = i-1;
-                break;
+                case ')':
+                    sum++;
+                    break;
+                case '(':
+                    if(sum == 0) {
+                        if(le != i) AddStrL(retL, s, i, le);
+                        le = i - 1;
+                    } else
+                        sum--;
+                    if(sum == 0) lc = i - 1;
+                    break;
+                default:
+                    if(sum == 0) lc = i - 1;
+                    break;
             }
         }
         if(lc > le) {
             if(retL.size() == 0)
                 retL.emplace_back(&(s[le]), &(s[lc]));
-            else for(auto &i : retL)
-                i.append(&(s[le]), &(s[lc]));
+            else
+                for(auto &i : retL) i.append(&(s[le]), &(s[lc]));
         }
     }
+
 public:
     vector<string> removeInvalidParentheses0(string s) {
         vector<string> retR;
-        int last;
+        int            last;
         RemoveR(s, retR, last);
         if(last != s.size()) {
             vector<string> retL;
@@ -119,19 +106,20 @@ public:
             if(retL.size() != 0) {
                 vector<string> newstrs;
                 for(auto &i : retR)
-                    for(auto &j : retL)
-                        newstrs.emplace_back(i+j);
+                    for(auto &j : retL) newstrs.emplace_back(i + j);
                 swap(newstrs, retR);
             }
         }
         return retR;
     }
     vector<string> removeInvalidParentheses(string s) {
-        size_t b = 0, e = s.size()-1;
-        for(; b < e && s[b] != '('; b++);
-        for(; b < e && s[e] != ')'; b++);
+        size_t b = 0, e = s.size() - 1;
+        for(; b < e && s[b] != '('; b++)
+            ;
+        for(; b < e && s[e] != ')'; b++)
+            ;
         vector<string> retR;
-        int last;
+        int            last;
         RemoveR(s, retR, last);
         if(last != s.size()) {
             vector<string> retL;
@@ -139,8 +127,7 @@ public:
             if(retL.size() != 0) {
                 vector<string> newstrs;
                 for(auto &i : retR)
-                    for(auto &j : retL)
-                        newstrs.emplace_back(i+j);
+                    for(auto &j : retL) newstrs.emplace_back(i + j);
                 swap(newstrs, retR);
             }
         }
@@ -148,9 +135,9 @@ public:
     }
 };
 
-
-class Solution {
-    // static inline vector<string> getstrsL(string &s, size_t b, size_t e, int diff, vector<pair<size_t, int>> &llist) {
+class Solution1 {
+    // static inline vector<string> getstrsL(string &s, size_t b, size_t e, int diff, vector<pair<size_t, int>> &llist)
+    // {
     //     size_t lend = llist.size()-1, lendn;
     //     for(int m = diff; ; lend--) {
     //         if(m < llist[lend]) {
@@ -165,13 +152,13 @@ class Solution {
     static inline vector<string> getstrsR(string &s, size_t b, size_t e, int diff, vector<pair<size_t, int>> &rlist) {
         //全排列，逐个往后移
         vector<string> ret;
-        int last;
-        vector<int> del(rlist.size(), 0);
-        for(int i = 0, rem = diff; ; i++) {
+        int            last;
+        vector<int>    del(rlist.size(), 0);
+        for(int i = 0, rem = diff;; i++) {
             if(rem <= rlist[i].second) {
                 del[i] = rem;
-                rem = 0;
-                last = i;
+                rem    = 0;
+                last   = i;
                 break;
             } else {
                 del[i] = rlist[i].second;
@@ -181,64 +168,67 @@ class Solution {
 
         string out(&s[b], &s[rlist[0].first]);
         for(int i = 1; i < rlist.size(); i++)
-            out.append(&s[rlist[i-1].first+rlist[i-1].second-del[i-1]], &s[rlist[i].first]);
-        out.append(&s[rlist[rlist.size()-1].first+rlist[rlist.size()-1].second-del[rlist.size()-1]], &s[e+1]);
+            out.append(&s[rlist[i - 1].first + rlist[i - 1].second - del[i - 1]], &s[rlist[i].first]);
+        out.append(&s[rlist[rlist.size() - 1].first + rlist[rlist.size() - 1].second - del[rlist.size() - 1]],
+                   &s[e + 1]);
         ret.emplace_back(out);
 
         while(last >= 0) {
-            for(int lastp = last, posi = last+1; posi != del.size(); posi++) {
+            for(int lastp = last, posi = last + 1; posi != del.size(); posi++) {
                 if(rlist[posi].second > del[posi]) {
                     del[lastp]--;
                     del[posi]++;
                     lastp = posi;
 
-                    out.resize(rlist[0].first-b);
+                    out.resize(rlist[0].first - b);
                     for(int i = 1; i < rlist.size(); i++)
-                        out.append(&s[rlist[i-1].first+rlist[i-1].second-del[i-1]], &s[rlist[i].first]);
-                    out.append(&s[rlist[rlist.size()-1].first+rlist[rlist.size()-1].second-del[rlist.size()-1]], &s[e+1]);
+                        out.append(&s[rlist[i - 1].first + rlist[i - 1].second - del[i - 1]], &s[rlist[i].first]);
+                    out.append(
+                        &s[rlist[rlist.size() - 1].first + rlist[rlist.size() - 1].second - del[rlist.size() - 1]],
+                        &s[e + 1]);
                     ret.emplace_back(out);
                 }
             }
-            if(del[last] == 0)
-                last--;
+            if(del[last] == 0) last--;
         }
         return ret;
     }
+
 public:
     vector<string> removeInvalidParentheses(string s) {
-        size_t b = 0, e = s.size()-1;
-        for(size_t i = 0; ; i++) {//i <= e && s[i] != '('
+        size_t b = 0, e = s.size() - 1;
+        for(size_t i = 0;; i++) {  // i <= e && s[i] != '('
             if(i > e)
                 return vector<string>{s.substr(b)};
             else if(s[i] == '(')
                 break;
             else if(s[i] == ')')
-                b = i+1;
+                b = i + 1;
         }
 
-        for(size_t i = e; ; i--) {//i >= b && s[i] != ')'
+        for(size_t i = e;; i--) {  // i >= b && s[i] != ')'
             if(i < b)
-                return vector<string>{s.substr(b, e-b)};
+                return vector<string>{s.substr(b, e - b)};
             else if(s[i] == ')')
                 break;
             else if(s[i] == '(')
-                e = i-1;
+                e = i - 1;
         }
-            
+
         vector<pair<size_t, int>> llist, rlist;
-        int lnum = 0, rnum = 0;
+        int                       lnum = 0, rnum = 0;
         for(size_t i = b; i <= e; i++) {
             if(s[i] == '(') {
                 lnum++;
-                if(i > 0 && s[i-1] == '(') {
-                    llist[llist.size()-1].second++;
+                if(i > 0 && s[i - 1] == '(') {
+                    llist[llist.size() - 1].second++;
                 } else {
                     llist.emplace_back(i, 1);
                 }
-            } else if(s[i] == ')'){
+            } else if(s[i] == ')') {
                 rnum++;
-                if(s[i-1] == ')') {
-                    rlist[rlist.size()-1].second++;
+                if(s[i - 1] == ')') {
+                    rlist[rlist.size() - 1].second++;
                 } else {
                     rlist.emplace_back(i, 1);
                 }
@@ -246,7 +236,7 @@ public:
         }
 
         if(lnum == rnum) {
-            return vector<string>{s.substr(b, e-b)};
+            return vector<string>{s.substr(b, e - b)};
         } else if(lnum > rnum) {
             int diff = lnum - rnum;
             return vector<string>{};
@@ -256,6 +246,38 @@ public:
             // return vector<string>{};
             return getstrsR(s, b, e, diff, rlist);
         }
+    }
+};
+
+class Solution {
+    vector<string> removeInvalidParentheses(string s, int lpAll, int rpAll) {
+        vector<tuple<string, int, int>> strCut{{}};
+        vector<string>                  ret;
+        string                          tmp;
+        int                             lp   = 0;
+        int                             rp   = 0;
+        bool                            inRp = false;
+        for(auto &c : s) {
+            if(c == ')') {
+                if(!inRp) inRp = true;
+                rp++;
+            }
+        }
+        return ret;
+    }
+
+public:
+    vector<string> removeInvalidParentheses(string s) {
+        int lp = 0;
+        int rp = 0;
+        for(auto &c : s) switch(c) {
+                case '(':
+                    lp++;
+                    break;
+                case ')':
+                    rp++;
+                    break;
+            }
     }
 };
 
@@ -303,11 +325,11 @@ int main() {
     // }
     cout << "9:" << endl;
     {
-        //4
+        // 4
         string s = ")()())r)";
         cout << Solution().removeInvalidParentheses(s) << endl;
     }
-    
+
     return 0;
 }
 #endif
