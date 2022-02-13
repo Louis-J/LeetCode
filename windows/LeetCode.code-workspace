@@ -1,7 +1,12 @@
 {
 	"folders": [
 		{
-			"path": "."
+			"path": ".",
+			"name": "profile"
+		},
+		{
+			"path": "..",
+			"name": "LeetCode"
 		}
 	],
 	"settings": {
@@ -100,8 +105,34 @@
 			"*.rh": "cpp",
 			"hash_map": "cpp"
 		},
-		"cppCompile.flags": "-IE:/Works/CCPP/LeetCode/ -std=c++17 -g",
 		"C_Cpp.default.cStandard": "c17",
-		"C_Cpp.default.cppStandard": "c++20"
+		"C_Cpp.default.cppStandard": "c++20",
+		"C_Cpp.default.defines": [
+			"_DEBUG",
+			"UNICODE",
+			"_UNICODE",
+			"LEETCODE"
+		],
+		"C_Cpp.default.includePath": [
+			"${default}",
+			"${workspaceFolder}/inc",
+			"${workspaceRoot}/../inc/**",
+			"${workspaceRoot}/**",
+			"D:/Program/ccpp/mingw_w64/x86_64-w64-mingw32/include/**",
+			"D:/Program/ccpp/mingw_w64/lib/gcc/x86_64-w64-mingw32/11.2.1/include/**",
+			"D:/Program/ccpp/mingw_w64/include/**",
+		],
+		"C_Cpp.default.intelliSenseMode": "gcc-x64",
+		"C_Cpp.errorSquiggles": "Disabled",
+		"C_Cpp.vcFormat.newLine.closeBraceSameLine.emptyType": true,
+		"C_Cpp.vcFormat.newLine.closeBraceSameLine.emptyFunction": true,
+		"C_Cpp.vcFormat.newLine.beforeOpenBrace.type": "sameLine",
+		"C_Cpp.vcFormat.newLine.beforeOpenBrace.namespace": "sameLine",
+		"C_Cpp.vcFormat.newLine.beforeOpenBrace.lambda": "sameLine",
+		"C_Cpp.vcFormat.newLine.beforeOpenBrace.function": "sameLine",
+		"C_Cpp.vcFormat.newLine.beforeOpenBrace.block": "sameLine",
+		"C_Cpp.vcFormat.newLine.beforeCatch": false,
+		"C_Cpp.vcFormat.newLine.beforeElse": false,
+		//"C_Cpp.formatting": "vcFormat",
 	}
 }

@@ -16,6 +16,7 @@
 #include <sstream>
 #include <stack>
 #include <string>
+#include <string_view>
 #include <unordered_map>
 #include <unordered_set>
 #include <vector>
@@ -28,8 +29,7 @@ struct ListNode {
     ListNode(int x) : val(x), next(NULL) {}
     static ListNode *Create(initializer_list<int> &list);
     static ListNode *Create(initializer_list<int> &&list);
-    friend ostream & operator<<(ostream &ostr, shared_ptr<ListNode> &);
-    friend ostream & operator<<(ostream &ostr, ListNode *&);
+    friend ostream  &operator<<(ostream &ostr, ListNode *&);
 };
 
 inline ListNode *ListNode::Create(initializer_list<int> &list) {
@@ -42,12 +42,6 @@ inline ListNode *ListNode::Create(initializer_list<int> &list) {
     return head->next;
 }
 inline ListNode *ListNode::Create(initializer_list<int> &&list) { return ListNode::Create(list); }
-inline ostream & operator<<(ostream &ostr, shared_ptr<ListNode> &l) {
-    ostr << l->val;
-    if(l->next != nullptr) ostr << " -> " << l->next;
-    return ostr;
-}
-inline ostream &operator<<(ostream &ostr, shared_ptr<ListNode> &&l) { return ostr << l; }
 
 struct TreeNode {
     int       val;
@@ -59,7 +53,7 @@ struct TreeNode {
     static TreeNode *CreatePre(initializer_list<optional<int>> &&list);
     static TreeNode *CreateLev(initializer_list<optional<int>> &list);
     static TreeNode *CreateLev(initializer_list<optional<int>> &&list);
-    friend ostream & operator<<(ostream &ostr, TreeNode *&);
+    friend ostream  &operator<<(ostream &ostr, TreeNode *&);
 
 private:
     TreeNode(initializer_list<optional<int>> &list, initializer_list<optional<int>>::iterator &&i);
@@ -87,7 +81,8 @@ inline TreeNode *TreeNode::CreatePre(initializer_list<optional<int>> &list) {
 inline TreeNode *TreeNode::CreatePre(initializer_list<optional<int>> &&list) { return TreeNode::CreatePre(list); }
 inline TreeNode *TreeNode::CreateLev(initializer_list<optional<int>> &list) {
     if(list.size() == 0 || *(list.begin()) == nullopt) return nullptr;
-    TreeNode *         head = new TreeNode(**list.begin());
+
+    TreeNode          *head = new TreeNode(**list.begin());
     vector<TreeNode *> leva{head};
     vector<TreeNode *> levb;
     auto               i = leva.begin();
@@ -122,6 +117,7 @@ struct LCPrinter {
     }
 
     inline friend ostream &operator<<(ostream &ostr, ListNode *&l) {
+        if(l == nullptr) return ostr << "(ListNode*)nullptr";
         ostr << l->val;
         if(l->next != nullptr) ostr << " -> " << l->next;
         return ostr;

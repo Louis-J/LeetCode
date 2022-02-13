@@ -1,18 +1,30 @@
 #ifdef LEETCODE
-#include "LeetCodeL.hpp"
+#include <LeetCodeL.hpp>
 #endif
 
 class Solution {
 public:
     char firstUniqChar(string s) {
-        char cs[26] = {};
-        for(auto &c : s) {
-            if(cs[c - 'a'] < 2) cs[c - 'a']++;
+        int order = 0;
+        int chars[26] = {};
+        for (auto& c : s) {
+            if (chars[c - 'a'] == 0)
+                chars[c - 'a'] = ++order;
+            else if (chars[c - 'a'] > 0)
+                chars[c - 'a'] = -1;
         }
-        for(char i = 0; i < 26; i++) {
-            if(cs[i] == 1) return i + 'a';
-        }
-        return ' ';
+
+        int aimOrder = 27;
+        int aimIndex;
+        for (int i = 0; i < 26; i++)
+            if (chars[i] > 0 && chars[i] < aimOrder) {
+                aimIndex = i;
+                aimOrder = chars[i];
+            }
+        if (aimOrder == 27)
+            return ' ';
+        else
+            return 'a' + aimIndex;
     }
 };
 

@@ -1,5 +1,5 @@
 #ifdef LEETCODE
-#include "LeetCodeL.hpp"
+#include <LeetCodeL.hpp>
 #endif
 
 class Solution0 {
@@ -249,7 +249,7 @@ public:
     }
 };
 
-class Solution {
+class Solution2 {
     vector<string> removeInvalidParentheses(string s, int lpAll, int rpAll) {
         vector<tuple<string, int, int>> strCut{{}};
         vector<string>                  ret;
@@ -278,6 +278,118 @@ public:
                     rp++;
                     break;
             }
+    }
+};
+
+class Solution3 {
+public:
+    void rmRHelper(vector<string> &ret, vector<pair<string, int>> &strCut, vector<int> &arr, int index, int num) {
+        if(index == arr.size() - 1) {
+            if(strCut[index].second >= num) {
+                arr[index] = num;
+                string str;
+                for(int i = 0; i <= index; i++) {
+                    str.append(strCut[i].first);
+                    str.append(strCut[i].second - arr[i], ')');
+                }
+                ret.emplace_back(str);
+            }
+            return;
+        }
+        for(int i = 0; i <= strCut[index].second; i++) {
+            arr[index] = i;
+            rmRHelper(ret, strCut, arr, index + 1, num - i);
+        }
+    }
+    vector<string> rmR(string s, int num) {
+        vector<pair<string, int>> strCut{{"", 0}};
+        bool                      inStr = true;
+        for(auto &c : s) {
+            if(c == ')') {
+                if(inStr) inStr = false;
+                strCut.back().second++;
+            } else {
+                if(!inStr) strCut.emplace_back(pair<string, int>{"", 0});
+                strCut.back().first.append(1, c);
+            }
+        }
+
+        vector<string> ret;
+        vector<int>    arr(strCut.size());
+        rmRHelper(ret, strCut, arr, 0, num);
+        return ret;
+    }
+    vector<string> rmL(string s, int num) {
+        string rev;
+        for(auto it = s.rbegin(); it != s.rend(); it++) switch(*it) {
+                case '(':
+                    rev.append(1, ')');
+                    break;
+                case ')':
+                    rev.append(1, '(');
+                    break;
+                default:
+                    rev.append(1, *it);
+            }
+        auto           retRev = rmR(rev, num);
+        vector<string> ret;
+        for(auto &str : retRev) {
+            rev.erase();
+            for(auto it = str.rbegin(); it != str.rend(); it++) switch(*it) {
+                    case '(':
+                        rev.append(1, ')');
+                        break;
+                    case ')':
+                        rev.append(1, '(');
+                        break;
+                    default:
+                        rev.append(1, *it);
+                }
+            ret.emplace_back(rev);
+        }
+        return ret;
+    }
+    vector<string> removeInvalidParentheses(string s) {
+        int lIndex = -1, lsum = 0;
+
+        int rIndex = s.size(), rsum = 0;
+
+        int sum;
+        int state;
+
+        sum = state = 0;
+        for(int i = 0; i != s.size(); i++) {
+            auto c = s[i];
+            if(c == '(') {
+                sum--;
+                state++;
+            } else if(c == ')') {
+                sum++;
+                if(state == 0)
+                    lsum = sum, lIndex = i;
+                else
+                    --state;
+            }
+        }
+
+        sum = state = 0;
+        for(int i = s.size() - 1; i >= 0; i--) {
+            auto c = s[i];
+            if(c == ')') {
+                sum--;
+                state++;
+            } else if(c == '(') {
+                sum++;
+                if(state == 0)
+                    rsum = sum, rIndex = i;
+                else
+                    --state;
+            }
+        }
+
+        cout << lIndex << ' ' << rIndex << endl;
+        cout << lsum << ' ' << rsum << endl;
+        return {};
     }
 };
 

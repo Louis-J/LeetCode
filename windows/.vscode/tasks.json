@@ -16,14 +16,14 @@
                 "-Wall",    // 开启额外警告
                 "-Wno-unused-variable",
                 "-Wno-sign-compare",
-                "-IF:\\Program\\ProMaker\\CCPP\\Compiler\\3rd\\include\\",
+                "-I${workspaceRoot}/../inc",
                 "-I${workspaceRoot}\\",
                 "-I${workspaceRoot}\\include\\",
                 "-L${workspaceRoot}\\lib\\",
                 "-static-libstdc++",
                 "-static-libgcc",
 
-                "-o${fileDirname}\\${fileBasenameNoExtension}.exe"
+                "-o${workspaceRoot}/../bin/win/${fileBasenameNoExtension}.exe"
             ],
             "group": {
                 "kind": "build",
@@ -67,15 +67,13 @@
                 "-Wall",    // 开启额外警告
                 "-Wno-unused-variable",
                 "-Wno-sign-compare",
-                "-IF:\\Program\\ProMaker\\CCPP\\Compiler\\range\\",
-                "-IF:\\Program\\ProMaker\\CCPP\\Compiler\\3rd\\include\\",
+                "-I${workspaceRoot}/../inc",
                 "-I${workspaceRoot}\\",
                 "-I${workspaceRoot}\\include\\",
                 "-L${workspaceRoot}\\lib\\",
                 "-static-libstdc++",
-                "-static-libgcc",
 
-                "-o${fileDirname}\\${fileBasenameNoExtension}.exe"
+                "-o${workspaceRoot}/../bin/win/${fileBasenameNoExtension}.exe"
             ],
             "group": {
                 "kind": "build",
@@ -120,15 +118,13 @@
                 "-Wall",    // 开启额外警告
                 "-Wno-unused-variable",
                 "-Wno-sign-compare",
-                "-IF:\\Program\\ProMaker\\CCPP\\Compiler\\range\\",
-                "-IF:\\Program\\ProMaker\\CCPP\\Compiler\\3rd\\include\\",
+                "-I${workspaceRoot}/../inc",
                 "-I${workspaceRoot}\\",
                 "-I${workspaceRoot}\\include\\",
                 "-L${workspaceRoot}\\lib\\",
                 "-static-libstdc++",
-                "-static-libgcc",
 
-                "-o${fileDirname}\\${fileBasenameNoExtension}.exe"
+                "-o${workspaceRoot}/../bin/win/${fileBasenameNoExtension}.exe"
             ],
             "group": {
                 "kind": "build",
@@ -173,15 +169,13 @@
                 "-Wall",    // 开启额外警告
                 "-Wno-unused-variable",
                 "-Wno-sign-compare",
-                "-IF:\\Program\\ProMaker\\CCPP\\Compiler\\range\\",
-                "-IF:\\Program\\ProMaker\\CCPP\\Compiler\\3rd\\include\\",
+                "-I${workspaceRoot}/../inc",
                 "-I${workspaceRoot}\\",
                 "-I${workspaceRoot}\\include\\",
                 "-L${workspaceRoot}\\lib\\",
                 "-static-libstdc++",
-                "-static-libgcc",
 
-                "-o${fileDirname}\\${fileBasenameNoExtension}.exe"
+                "-o${workspaceRoot}/../bin/win/${fileBasenameNoExtension}.exe"
             ],
             "group": {
                 "kind": "build",
@@ -222,15 +216,13 @@
                 "-std=c++2a",
                 "-Wall",    // 开启额外警告
                 "-Wno-unused-variable",
-                "-IF:\\Program\\ProMaker\\CCPP\\Compiler\\range\\",
-                "-IF:\\Program\\ProMaker\\CCPP\\Compiler\\3rd\\include\\",
+                "-I${workspaceRoot}/../inc",
                 "-I${workspaceRoot}\\",
                 "-I${workspaceRoot}\\include\\",
                 "-L${workspaceRoot}\\lib\\",
                 "-static-libstdc++",
-                "-static-libgcc",
 
-                "-o${fileDirname}\\${fileBasenameNoExtension}.exe"
+                "-o${workspaceRoot}/../bin/win/${fileBasenameNoExtension}.exe"
             ],
             "group": {
                 "kind": "build",
@@ -275,15 +267,14 @@
                 "-Wall",    // 开启额外警告
                 "-Wno-invalid-source-encoding",
                 "-Wno-unused-variable",
-                "-IF:\\Program\\ProMaker\\CCPP\\Compiler\\range\\",
-                "-IF:\\Program\\ProMaker\\CCPP\\Compiler\\3rd\\include\\",
+                "-I${workspaceRoot}/../inc",
                 "-I${workspaceRoot}\\",
                 "-I${workspaceRoot}\\include\\",
                 "-L${workspaceRoot}\\lib\\",
                 "-static-libstdc++",
                 "-pthread",
 
-                "-o${fileDirname}\\${fileBasenameNoExtension}.exe"
+                "-o${workspaceRoot}/../bin/win/${fileBasenameNoExtension}.exe"
             ],
             "group": {
                 "kind": "build",
@@ -323,20 +314,19 @@
                 "-O3",
                 "${file}",
                 "-std=c++2a",
-                // "-fsanitize=address",
-                // "-fno-omit-frame-pointer",
+                "-fsanitize=address",
+                "-fno-omit-frame-pointer",
                 "-Wall",    // 开启额外警告
                 "-Wno-invalid-source-encoding",
                 "-Wno-unused-variable",
-                "-IF:\\Program\\ProMaker\\CCPP\\Compiler\\range\\",
-                "-IF:\\Program\\ProMaker\\CCPP\\Compiler\\3rd\\include\\",
+                "-I${workspaceRoot}/../inc",
                 "-I${workspaceRoot}\\",
                 "-I${workspaceRoot}\\include\\",
                 "-L${workspaceRoot}\\lib\\",
                 "-static-libstdc++",
                 "-pthread",
 
-                "-o${fileDirname}\\${fileBasenameNoExtension}.exe"
+                "-o${workspaceRoot}/../bin/win/${fileBasenameNoExtension}.exe"
             ],
             "group": {
                 "kind": "build",
@@ -380,15 +370,14 @@
                 "-Wall",    // 开启额外警告
                 "-Wno-invalid-source-encoding",
                 "-Wno-unused-variable",
-                "-IF:\\Program\\ProMaker\\CCPP\\Compiler\\range\\",
-                "-IF:\\Program\\ProMaker\\CCPP\\Compiler\\3rd\\include\\",
+                "-I${workspaceRoot}/../inc",
                 "-I${workspaceRoot}\\",
                 "-I${workspaceRoot}\\include\\",
                 "-L${workspaceRoot}\\lib\\",
                 "-static-libstdc++",
                 "-pthread",
 
-                "-o${fileDirname}\\${fileBasenameNoExtension}.ll"
+                "-o${workspaceRoot}/../bin/win/${fileBasenameNoExtension}.exe"
             ],
             "group": {
                 "kind": "build",

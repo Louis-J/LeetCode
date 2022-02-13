@@ -8,11 +8,6 @@
 		}
 	],
 	"settings": {
-		"gnuGlobal.libraryPath": [
-			"${workspaceRoot}/**",
-			"F:/Program/ProMaker/CCPP/Compiler/mingw64/x86_64-w64-mingw32/include/**",
-			"F:/Program/ProMaker/CCPP/Compiler/3rd/include/**"
-		],
 		"files.associations": {
 			"initializer_list": "cpp",
 			"iosfwd": "cpp",
@@ -115,7 +110,19 @@
 			"${default}",
 			"${workspaceFolder}/inc",
 			"${workspaceRoot}/../inc/**",
-			"/usr/include/**"
-		]
+			"${workspaceRoot}/**",
+			"/usr/include/**",
+		],
+		"C_Cpp.default.intelliSenseMode": "gcc-x64",
+		"C_Cpp.vcFormat.newLine.closeBraceSameLine.emptyType": true,
+		"C_Cpp.vcFormat.newLine.closeBraceSameLine.emptyFunction": true,
+		"C_Cpp.vcFormat.newLine.beforeOpenBrace.type": "sameLine",
+		"C_Cpp.vcFormat.newLine.beforeOpenBrace.namespace": "sameLine",
+		"C_Cpp.vcFormat.newLine.beforeOpenBrace.lambda": "sameLine",
+		"C_Cpp.vcFormat.newLine.beforeOpenBrace.function": "sameLine",
+		"C_Cpp.vcFormat.newLine.beforeOpenBrace.block": "sameLine",
+		"C_Cpp.vcFormat.newLine.beforeCatch": false,
+		"C_Cpp.vcFormat.newLine.beforeElse": false,
+		//"C_Cpp.formatting": "vcFormat",
 	}
 }
